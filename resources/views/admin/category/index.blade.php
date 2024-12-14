@@ -9,6 +9,15 @@
     <li class="active">Category</li>
 @endsection
 
+@push('style')
+    <style>
+        table,
+        th {
+            text-align: center
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-xs-12">
@@ -25,6 +34,7 @@
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
+                                <th width="20%">Image</th>
                                 <th>Name</th>
                                 <th width="15%">Action</th>
                             </tr>
@@ -57,6 +67,11 @@
                         sortable: false
                     },
                     {
+                        data: 'image',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
                         data: 'name'
                     },
                     {
@@ -69,13 +84,20 @@
 
             $('#modal-form').on('submit', function(e) {
                 e.preventDefault(); // Prevent the default form submission
-                $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
-                    .done((response) => {
+                let formData = new FormData($('#modal-form form')[0]);
+
+                $.ajax({
+                    type: 'POST',
+                    url: $('#modal-form form').attr('action'),
+                    data: formData,
+                    contentType: false, // Membiarkan browser mengatur header Content-Type yang benar
+                    processData: false, // Mencegah jQuery mengubah data menjadi query string
+                    success: function(response) {
                         $('#modal-form').modal('hide');
                         $('.text-danger').remove();
                         table.ajax.reload();
-                    })
-                    .fail((errors) => {
+                    },
+                    error: function(errors) {
                         if (errors.status === 422) {
                             // Validation error, process and display the errors
                             let response = errors.responseJSON;
@@ -83,7 +105,8 @@
                         } else {
                             alert('Tidak dapat menyimpan data');
                         }
-                    });
+                    }
+                });
             });
 
             function displayFormErrors(errors) {
@@ -97,7 +120,7 @@
                     fieldElement.after(errorMessage);
                 });
             }
-        })
+        });
 
         function addForm(url) {
             $('#modal-form').modal('show');

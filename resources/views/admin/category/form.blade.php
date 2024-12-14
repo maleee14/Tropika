@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-form">
     <div class="modal-dialog">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             @method('post')
             @csrf
             <div class="modal-content">
@@ -13,9 +13,10 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" name="name" id="name">
-                        {{-- @error('name')
-                            <span class="text text-danger">{{ $message }}</span>
-                        @enderror --}}
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" name="image" id="image">
                     </div>
                 </div>
                 <div class="modal-footer">

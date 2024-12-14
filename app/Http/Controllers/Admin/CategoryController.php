@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -24,6 +25,9 @@ class CategoryController extends Controller
         return datatables()
             ->of($category)
             ->addIndexColumn()
+            ->addColumn('image', function ($category) {
+                return '<img src="' . url('storage/category/' . $category->image) . '" alt="' . $category->name . '" style="width: 100px; height: auto;">';
+            })
             ->addColumn('action', function ($category) {
                 return '
                 <div style="display: flex; justify-content: center;">
@@ -37,7 +41,7 @@ class CategoryController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['image', 'action'])
             ->make(true);
     }
 
@@ -56,9 +60,18 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:categories,name',
+            'image' => 'required|image',
         ]);
 
-        Category::create($request->all());
+        $file = $request->file('image');
+        $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
+
+        Storage::disk('category')->put($path, file_get_contents($file));
+
+        Category::create([
+            'name' => $request->name,
+            'image' => $path,
+        ]);
 
         return response()->json('Data Berhasil Di Simpan', 200);
     }
@@ -88,10 +101,26 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         $request->validate([
-            'name' => 'required|unique:categories,name',
+            'name' => 'required',
+            'image' => 'sometimes|image',
         ]);
 
-        $category->update($request->all());
+        $category->name = $request->name;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('category')->put($path, file_get_contents($file));
+
+            if ($category->image) {
+                Storage::disk('category')->delete($category->image);
+            }
+
+            $category->image = $path;
+        }
+
+        $category->update();
 
         return response()->json('Data Berhasil Di Simpan', 200);
     }

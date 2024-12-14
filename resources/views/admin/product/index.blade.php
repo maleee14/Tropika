@@ -9,6 +9,15 @@
     <li class="active">Product</li>
 @endsection
 
+@push('style')
+    <style>
+        table,
+        th {
+            text-align: center
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-xs-12">
@@ -61,7 +70,9 @@
                         sortable: false
                     },
                     {
-                        data: 'image'
+                        data: 'image',
+                        searchable: false,
+                        sortable: false
                     },
                     {
                         data: 'name'

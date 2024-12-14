@@ -27,7 +27,7 @@ class ProductController extends Controller
             ->of($product)
             ->addIndexColumn()
             ->addColumn('image', function ($product) {
-                return '<img src="' . url('storage/' . $product->image) . '" alt="' . htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8') . '" style="width: 100px; height: auto;">';
+                return '<img src="' . url('storage/product/' . $product->image) . '" alt="' . $product->name . '" style="width: 100px; height: auto;">';
             })
             ->addColumn('category', function ($product) {
                 return $product->category->name;
@@ -74,7 +74,7 @@ class ProductController extends Controller
         $file = $request->file('image');
         $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
 
-        Storage::disk('public')->put($path, file_get_contents($file));
+        Storage::disk('product')->put($path, file_get_contents($file));
 
         Product::create([
             'category_id' => $request->category_id,
@@ -130,10 +130,10 @@ class ProductController extends Controller
             $file = $request->file('image');
             $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
 
-            Storage::disk('public')->put($path, file_get_contents($file));
+            Storage::disk('product')->put($path, file_get_contents($file));
 
             if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+                Storage::disk('product')->delete($product->image);
             }
 
             $product->image = $path;
@@ -152,8 +152,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if (Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
+        if (Storage::disk('product')->exists($product->image)) {
+            Storage::disk('product')->delete($product->image);
         }
         $product->delete();
 
