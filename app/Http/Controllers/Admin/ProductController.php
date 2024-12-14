@@ -54,8 +54,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::all()->pluck('name', 'id');
-        return view('admin.product.create', compact('category'));
+        //
     }
 
     /**
@@ -111,7 +110,39 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+
+        $request->validate([
+            'category_id' => 'required',
+            'name' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'image' => 'sometimes|image',
+            'description' => 'required',
+        ]);
+
+        $product->category_id = $request->category_id;
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
+
+            Storage::disk('public')->put($path, file_get_contents($file));
+
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+
+            $product->image = $path;
+        }
+
+        $product->description = $request->description;
+        $product->update();
+
+        return response()->json('Data Berhasil Di Simpan', 200);
     }
 
     /**
@@ -119,6 +150,13 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if (Storage::disk('public')->exists($product->image)) {
+            Storage::disk('public')->delete($product->image);
+        }
+        $product->delete();
+
+        return redirect()->route('product.index');
     }
 }

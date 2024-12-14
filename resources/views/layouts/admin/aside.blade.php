@@ -13,10 +13,10 @@
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
             <li>
                 <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
             </li>
+            <li class="header">MASTER</li>
             <li>
                 <a href="{{ route('category.index') }}"><i class="fa fa-cube"></i> <span>Category</span></a>
             </li>
