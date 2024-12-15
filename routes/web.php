@@ -4,13 +4,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\DashboardContoller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', [DashboardContoller::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/product/{slug}', [HomeController::class, 'detail'])->name('product.detail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
