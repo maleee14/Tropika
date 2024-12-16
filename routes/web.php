@@ -4,11 +4,15 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\DashboardContoller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/product/{slug}', [HomeController::class, 'detail'])->name('product.detail');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/addcart', [CartController::class, 'addCart'])->name('cart.add');
+Route::delete('/delete-cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

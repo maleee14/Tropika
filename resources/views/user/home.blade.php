@@ -173,10 +173,18 @@
                                                     <div class="d-flex justify-content-between flex-lg-wrap">
                                                         <p class="text-dark fs-5 fw-bold mb-0">Rp
                                                             {{ number_format($item->price, 0, ',', '.') }} / kg</p>
-                                                        <a href="#"
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                                                            cart</a>
+                                                        <form action="{{ route('cart.add') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                value="{{ $item->id }}">
+                                                            <input type="hidden" id="quantity" name="quantity"
+                                                                value="1">
+                                                            <button type="submit"
+                                                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                                                    class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                Add to cart
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,10 +216,18 @@
                                                     <div class="d-flex justify-content-between flex-lg-wrap">
                                                         <p class="text-dark fs-5 fw-bold mb-0">
                                                             Rp {{ number_format($item->price, 0, ',', '.') }} / kg</p>
-                                                        <a href="#"
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                                                            cart</a>
+                                                        <form action="{{ route('cart.add') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                value="{{ $item->id }}">
+                                                            <input type="hidden" id="quantity" name="quantity"
+                                                                value="1">
+                                                            <button type="submit"
+                                                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                                                    class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                Add to cart
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
