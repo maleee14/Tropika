@@ -5,14 +5,12 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\DashboardContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/product/{slug}', [HomeController::class, 'detail'])->name('product.detail');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/addcart', [CartController::class, 'addCart'])->name('cart.add');
-Route::delete('/delete-cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,6 +26,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
     Route::resource('/product', ProductController::class);
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/addcart', [CartController::class, 'addCart'])->name('cart.add');
+    Route::delete('/delete-cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 });
 
 require __DIR__ . '/auth.php';

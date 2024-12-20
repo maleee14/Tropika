@@ -45,8 +45,17 @@
                             <i class="fas fa-user fa-2x"></i>
                         </a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="{{ route('login') }}" class="dropdown-item">Login</a>
-                            <a href="{{ route('register') }}" class="dropdown-item">Register</a>
+                            @if (Route::has('login'))
+                                @auth
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                @else
+                                    <a href="{{ route('login') }}" class="dropdown-item">Login</a>
+                                    <a href="{{ route('register') }}" class="dropdown-item">Register</a>
+                                @endauth
+                            @endif
                         </div>
                     </div>
                 </div>

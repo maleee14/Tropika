@@ -71,4 +71,17 @@ class CartController extends Controller
         Cart::remove($id);
         return redirect()->back();
     }
+
+    public function checkout()
+    {
+        $cartItem  = Cart::content();
+        $subtotal = floatval(str_replace(',', '', Cart::subtotal()));
+        $grandTotal = floatval(str_replace(',', '', Cart::total()));
+
+        if ($cartItem->isEmpty()) {
+            return view('user.pages.404');
+        } else {
+            return view('user.cart.checkout', compact('cartItem', 'subtotal', 'grandTotal'));
+        }
+    }
 }
