@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class CheckoutController extends Controller
             'zip_code' => $request->zip_code,
             'phone' => $request->phone,
             'notes' => $request->notes,
-            'grand_total' => Cart::total(),
+            'grand_total' => floatval(str_replace(',', '', Cart::priceTotal())),
         ]);
 
         foreach ($cartItem as $item) {
@@ -42,6 +43,10 @@ class CheckoutController extends Controller
                 'unit_amount' => $item->price,
                 'total_amount' => $item->options->total_amount,
             ]);
+
+            $produk = Product::find($item->id);
+            $produk->stock -= $item->qty;
+            $produk->update();
         }
 
         Cart::destroy();

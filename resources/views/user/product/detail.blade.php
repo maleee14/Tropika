@@ -32,6 +32,7 @@
                         <div class="col-lg-6">
                             <h4 class="fw-bold mb-3">{{ $product->name }}</h4>
                             <p class="mb-3">Category: {{ $product->category->name }}</p>
+                            <p class="mb-3">Stock : {{ $product->stock }}</p>
                             <h5 class="fw-bold mb-3">3,35 $</h5>
                             <div class="d-flex mb-4">
                                 <i class="fa fa-star text-secondary"></i>

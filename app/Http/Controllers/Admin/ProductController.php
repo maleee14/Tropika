@@ -32,6 +32,9 @@ class ProductController extends Controller
             ->addColumn('category', function ($product) {
                 return $product->category->name;
             })
+            ->addColumn('price', function ($product) {
+                return 'Rp' . number_format($product->price, 0, ',', '.');
+            })
             ->addColumn('action', function ($product) {
                 return '
                 <div style="display: flex; justify-content: center;">

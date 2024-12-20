@@ -23,6 +23,9 @@
             <li>
                 <a href="{{ route('product.index') }}"><i class="fa fa-cubes"></i> <span>Product</span></a>
             </li>
+            <li>
+                <a href="{{ route('order.index') }}"><i class="fa fa-shopping-bag"></i> <span>Order</span></a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
