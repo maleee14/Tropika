@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         $category = Category::all();
-        $product = Product::all();
+        $product = Product::with('category')->get();
         return view('user.home', compact('category', 'product'));
     }
 
@@ -25,5 +25,20 @@ class HomeController extends Controller
         } else {
             return view('user.pages.404');
         }
+    }
+
+    public function shop()
+    {
+        return view('user.pages.shop');
+    }
+
+    public function testimoni()
+    {
+        return view('user.pages.testimoni');
+    }
+
+    public function contact()
+    {
+        return view('user.pages.contact');
     }
 }

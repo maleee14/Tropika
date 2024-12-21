@@ -11,7 +11,10 @@ use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/product/{slug}', [HomeController::class, 'detail'])->name('product.detail');
+Route::get('/testimoni', [HomeController::class, 'testimoni'])->name('testimoni');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
