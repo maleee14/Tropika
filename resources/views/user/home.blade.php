@@ -5,26 +5,6 @@
 @endsection
 
 @section('content')
-    <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center">
-                    <div class="input-group w-75 mx-auto d-flex">
-                        <input type="search" class="form-control p-3" placeholder="keywords"
-                            aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Search End -->
-
     <!-- Hero Start -->
     <div class="container-fluid py-5 mb-5 hero-header">
         <div class="container py-5">
@@ -33,11 +13,13 @@
                     <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
                     <h1 class="mb-5 display-3 text-primary">Organic Veggies & Fruits Foods</h1>
                     <div class="position-relative mx-auto">
-                        <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number"
-                            placeholder="Search">
-                        <button type="submit"
-                            class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
-                            style="top: 0; right: 25%;">Submit Now</button>
+                        <form action="{{ route('product.search') }}" method="get">
+                            <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="text"
+                                name="search" placeholder="Search">
+                            <button type="submit"
+                                class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
+                                style="top: 0; right: 25%;">Submit Now</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-5">
@@ -194,44 +176,46 @@
                             </div>
                         </div>
                     </div>
-                    @foreach ($product as $item)
-                        <div id="tab-{{ $item->category_id }}" class="tab-pane fade show p-0">
+                    @foreach ($category as $cat)
+                        <div id="tab-{{ $cat->id }}" class="tab-pane fade show p-0">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="row g-4">
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="{{ url('storage/product/', $item->image) }}"
-                                                        style="height: 200px" class="img-fluid w-100 rounded-top"
-                                                        alt="{{ $item->name }}">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                    style="top: 10px; left: 10px;">{{ $item->category->name }}</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4><a href="">{{ $item->name }}</a></h4>
-                                                    <p>
-                                                        {{ implode(' ', array_slice(explode(' ', $item->description), 0, 10)) }}...
-                                                    </p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">
-                                                            Rp {{ number_format($item->price, 0, ',', '.') }} / kg</p>
-                                                        <form action="{{ route('cart.add') }}" method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="product_id"
-                                                                value="{{ $item->id }}">
-                                                            <input type="hidden" id="quantity" name="quantity"
-                                                                value="1">
-                                                            <button type="submit"
-                                                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-                                                                    class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                Add to cart
-                                                            </button>
-                                                        </form>
+                                        @foreach ($product->where('category_id', $cat->id) as $item)
+                                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                                <div class="rounded position-relative fruite-item">
+                                                    <div class="fruite-img">
+                                                        <img src="{{ url('storage/product/', $item->image) }}"
+                                                            style="height: 200px" class="img-fluid w-100 rounded-top"
+                                                            alt="{{ $item->name }}">
+                                                    </div>
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                        style="top: 10px; left: 10px;">{{ $item->category->name }}</div>
+                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <h4><a
+                                                                href="{{ route('product.detail', $item->slug) }}">{{ $item->name }}</a>
+                                                        </h4>
+                                                        <p>{{ implode(' ', array_slice(explode(' ', $item->description), 0, 10)) }}...
+                                                        </p>
+                                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                                            <p class="text-dark fs-5 fw-bold mb-0">Rp
+                                                                {{ number_format($item->price, 0, ',', '.') }} / kg</p>
+                                                            <form action="{{ route('cart.add') }}" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $item->id }}">
+                                                                <input type="hidden" id="quantity" name="quantity"
+                                                                    value="1">
+                                                                <button type="submit"
+                                                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                                                        class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                    Add to cart</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>

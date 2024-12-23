@@ -20,8 +20,25 @@ class HomeController extends Controller
     {
         $product = Product::where('slug', $slug)->first();
 
-        if ($product !== null) {
-            return view('user.product.detail', compact('product'));
+        if ($product !== null && $product->category !== null) {
+            $relatedProduct = Product::with('category')
+                ->where('category_id', $product->category->id)
+                ->where('id', '!=', $product->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return view('user.product.detail', compact('product', 'relatedProduct'));
+        } else {
+            return view('user.pages.404');
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $product = Product::where('name', 'like', '%' . $search . '%')->get();
+
+        if ($product->isNotEmpty()) {
+            return view('user.pages.shop', compact('product', 'search'));
         } else {
             return view('user.pages.404');
         }
@@ -29,7 +46,9 @@ class HomeController extends Controller
 
     public function shop()
     {
-        return view('user.pages.shop');
+
+        $product = Product::with('category')->paginate(9);
+        return view('user.pages.shop', compact('product'));
     }
 
     public function testimoni()

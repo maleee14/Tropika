@@ -45,6 +45,8 @@
     @include('layouts.frontend.navbar')
     <!-- Navbar End -->
 
+    @include('layouts.frontend.search')
+
     <div class="main">
         @yield('content')
     </div>
