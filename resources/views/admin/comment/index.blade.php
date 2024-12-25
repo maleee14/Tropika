@@ -25,6 +25,7 @@
                                 <th width="20%">User</th>
                                 <th>Product</th>
                                 <th>Comment</th>
+                                <th>Date</th>
                                 <th width="15%">Action</th>
                             </tr>
                         </thead>
@@ -60,10 +61,17 @@
                         sortable: false
                     },
                     {
-                        data: 'product'
+                        data: 'product',
+                        searchable: false,
+                        sortable: false
                     },
                     {
-                        data: 'content'
+                        data: 'content',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'date',
                     },
                     {
                         data: 'action',

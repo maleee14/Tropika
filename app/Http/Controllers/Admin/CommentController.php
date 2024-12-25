@@ -26,6 +26,9 @@ class CommentController extends Controller
             ->addColumn('product', function ($comment) {
                 return $comment->product->name;
             })
+            ->addColumn('date', function ($comment) {
+                return $comment->created_at->format('d F Y');
+            })
             ->addColumn('action', function ($comment) {
                 return '
                 <div style="display: flex; justify-content: center;">
