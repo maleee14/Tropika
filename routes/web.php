@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\DashboardContoller;
@@ -34,6 +35,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     Route::get('/order/data', [OrderController::class, 'data'])->name('order.data');
     Route::resource('/order', OrderController::class);
+
+    Route::get('/comment/data', [CommentController::class, 'data'])->name('comment.data');
+    Route::resource('/comment', CommentController::class);
 });
 
 Route::middleware('auth')->group(function () {

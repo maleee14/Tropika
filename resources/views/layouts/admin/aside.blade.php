@@ -26,6 +26,9 @@
             <li>
                 <a href="{{ route('order.index') }}"><i class="fa fa-shopping-bag"></i> <span>Order</span></a>
             </li>
+            <li>
+                <a href="{{ route('comment.index') }}"><i class="fa fa-comments-o"></i> <span>Comment</span></a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
