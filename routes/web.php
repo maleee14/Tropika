@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
+    Route::post('/comment', [HomeController::class, 'createComment'])->name('create.comment');
 });
 
 require __DIR__ . '/auth.php';
