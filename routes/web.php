@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/order', [HomeController::class, 'order'])->name('order');
+
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/addcart', [CartController::class, 'addCart'])->name('cart.add');
     Route::delete('/delete-cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');

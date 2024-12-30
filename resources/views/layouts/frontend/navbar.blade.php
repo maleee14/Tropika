@@ -55,6 +55,7 @@
                                         @csrf
                                         <button type="submit" class="dropdown-item">Logout</button>
                                     </form>
+                                    <a href="{{ route('order') }}" class="dropdown-item">My Order</a>
                                 @else
                                     <a href="{{ route('login') }}" class="dropdown-item">Login</a>
                                     <a href="{{ route('register') }}" class="dropdown-item">Register</a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -76,5 +77,11 @@ class HomeController extends Controller
     public function contact()
     {
         return view('user.pages.contact');
+    }
+
+    public function order()
+    {
+        $order = Order::with('user')->where('user_id', auth()->user()->id)->get();
+        return view('user.pages.order', compact('order'));
     }
 }
