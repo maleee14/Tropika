@@ -53,13 +53,9 @@
                                         <p class="mb-0 mt-4">Rp {{ number_format($item->grand_total, 0, ',', '.') }}</p>
                                     </td>
                                     <td>
-                                        <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                                <i class="fa fa-eye text-danger"></i>
-                                            </button>
-                                        </form>
+                                        <a href="" class="btn btn-md rounded-circle bg-light border mt-4">
+                                            <i class="fa fa-eye text-primary"></i>
+                                        </a>
                                     </td>
 
                                 </tr>
