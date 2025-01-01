@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\DashboardContoller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CheckoutController;
@@ -18,29 +18,28 @@ Route::get('/product', [HomeController::class, 'search'])->name('product.search'
 Route::get('/testimoni', [HomeController::class, 'testimoni'])->name('testimoni');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/category/data', [CategoryController::class, 'data'])->name('category.data');
-    Route::resource('/category', CategoryController::class);
-
-    Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
-    Route::resource('/product', ProductController::class);
-
-    Route::get('/order/data', [OrderController::class, 'data'])->name('order.data');
-    Route::resource('/order', OrderController::class);
-
-    Route::get('/comment/data', [CommentController::class, 'data'])->name('comment.data');
-    Route::resource('/comment', CommentController::class);
-});
-
 Route::middleware('auth')->group(function () {
+
+    Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('/category/data', [CategoryController::class, 'data'])->name('category.data');
+        Route::resource('/category', CategoryController::class);
+
+        Route::get('/product/data', [ProductController::class, 'data'])->name('product.data');
+        Route::resource('/product', ProductController::class);
+
+        Route::get('/order/data', [OrderController::class, 'data'])->name('order.data');
+        Route::resource('/order', OrderController::class);
+
+        Route::get('/comment/data', [CommentController::class, 'data'])->name('comment.data');
+        Route::resource('/comment', CommentController::class);
+    });
 
     Route::get('/order', [HomeController::class, 'order'])->name('order');
 
