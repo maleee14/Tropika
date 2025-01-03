@@ -33,10 +33,11 @@
                             <tr>
                                 <th width="5%">No</th>
                                 <th>Name</th>
-                                <th>Address</th>
                                 <th>Phone</th>
                                 <th>Total</th>
-                                <th>Notes</th>
+                                <th>Payment</th>
+                                <th>Payment Status</th>
+                                <th>Status</th>
                                 <th width="15%">Action</th>
                             </tr>
                         </thead>
@@ -72,10 +73,6 @@
                         data: 'name'
                     },
                     {
-                        data: 'address',
-                        sortable: false
-                    },
-                    {
                         data: 'phone',
                         sortable: false
                     },
@@ -85,7 +82,17 @@
                         sortable: false
                     },
                     {
-                        data: 'notes',
+                        data: 'payment_method',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'payment_status',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'status',
                         searchable: false,
                         sortable: false
                     },

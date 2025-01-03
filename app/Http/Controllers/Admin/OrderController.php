@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
@@ -22,9 +23,6 @@ class OrderController extends Controller
             ->addColumn('name', function ($order) {
                 return $order->address->firstname . ' ' . $order->address->lastname;
             })
-            ->addColumn('address', function ($order) {
-                return $order->address->address . ', ' . $order->address->city . ', ' . $order->address->zip_code;
-            })
             ->addColumn('phone', function ($order) {
                 return $order->address->phone;
             })
@@ -32,7 +30,7 @@ class OrderController extends Controller
                 return 'Rp ' . number_format($order->grand_total, 0, ',', '.');
             })
             ->addColumn('action', function ($order) {
-                return '<button type="button" onclick="showDetail(`' . route('order.show', $order->id) . '`)" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Detail</button>';
+                return '<button type="button" onclick="showDetail(`' . route('order.show', $order->id) . '`)" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button>';
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
