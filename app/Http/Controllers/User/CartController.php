@@ -76,7 +76,7 @@ class CartController extends Controller
     {
         $cartItem  = Cart::content();
         $subtotal = floatval(str_replace(',', '', Cart::subtotal()));
-        $grandTotal = floatval(str_replace(',', '', Cart::total()));
+        $grandTotal = floatval(str_replace(',', '', Cart::priceTotal()));
 
         if ($cartItem->isEmpty()) {
             return view('user.pages.404');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -21,19 +22,28 @@ class CheckoutController extends Controller
             'city' => 'required',
             'zip_code' => 'required',
             'phone' => 'required',
+            'payment_method' => 'required|in:transfer,check,cod,paypal',
         ]);
 
-        $order = Order::create([
-            'user_id' => auth()->user()->id,
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'address' => $request->address,
-            'city' => $request->city,
-            'zip_code' => $request->zip_code,
-            'phone' => $request->phone,
-            'notes' => $request->notes,
-            'grand_total' => floatval(str_replace(',', '', Cart::priceTotal())),
-        ]);
+        $order = new Order();
+        $order->user_id = auth()->user()->id;
+        $order->payment_method = $request->payment_method;
+        $order->payment_status = 'pending';
+        $order->status = 'new';
+        $order->notes = $request->notes;
+        $order->grand_total = floatval(str_replace(',', '', Cart::priceTotal()));
+        $order->save();
+
+        $address = new Address();
+        $address->order_id = $order->id;
+        $address->firstname = $request->firstname;
+        $address->lastname = $request->lastname;
+        $address->address = $request->address;
+        $address->city = $request->city;
+        $address->zip_code = $request->zip_code;
+        $address->phone = $request->phone;
+        $address->save();
+
 
         foreach ($cartItem as $item) {
             OrderDetail::create([

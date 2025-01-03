@@ -169,8 +169,8 @@
                         <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                             <div class="col-12">
                                 <div class="form-check text-start my-3">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1"
-                                        name="Transfer" value="Transfer">
+                                    <input type="radio" class="form-check-input bg-primary border-0" id="Transfer-1"
+                                        name="payment_method" value="transfer">
                                     <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
                                 </div>
                                 <p class="text-start text-dark">Make your payment directly into our bank account. Please
@@ -181,8 +181,8 @@
                         <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                             <div class="col-12">
                                 <div class="form-check text-start my-3">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1"
-                                        name="Payments" value="Payments">
+                                    <input type="radio" class="form-check-input bg-primary border-0" id="Payments-1"
+                                        name="payment_method" value="check">
                                     <label class="form-check-label" for="Payments-1">Check Payments</label>
                                 </div>
                             </div>
@@ -190,8 +190,8 @@
                         <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                             <div class="col-12">
                                 <div class="form-check text-start my-3">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1"
-                                        name="Delivery" value="Delivery">
+                                    <input type="radio" class="form-check-input bg-primary border-0" id="Delivery-1"
+                                        name="payment_method" value="cod">
                                     <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
                                 </div>
                             </div>
@@ -199,8 +199,8 @@
                         <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                             <div class="col-12">
                                 <div class="form-check text-start my-3">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1"
-                                        name="Paypal" value="Paypal">
+                                    <input type="radio" class="form-check-input bg-primary border-0" id="Paypal-1"
+                                        name="payment_method" value="paypal">
                                     <label class="form-check-label" for="Paypal-1">Paypal</label>
                                 </div>
                             </div>

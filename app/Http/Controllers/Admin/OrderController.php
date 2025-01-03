@@ -20,10 +20,13 @@ class OrderController extends Controller
         return datatables()
             ->of($order)
             ->addColumn('name', function ($order) {
-                return $order->firstname . ' ' . $order->lastname;
+                return $order->address->firstname . ' ' . $order->address->lastname;
             })
             ->addColumn('address', function ($order) {
-                return $order->address . ', ' . $order->city . ', ' . $order->zip_code;
+                return $order->address->address . ', ' . $order->address->city . ', ' . $order->address->zip_code;
+            })
+            ->addColumn('phone', function ($order) {
+                return $order->address->phone;
             })
             ->addColumn('grand_total', function ($order) {
                 return 'Rp ' . number_format($order->grand_total, 0, ',', '.');
