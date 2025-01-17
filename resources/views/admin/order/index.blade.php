@@ -49,7 +49,6 @@
         </div>
         <!-- /.col -->
     </div>
-    @includeIf('admin.order.detail')
 @endsection
 
 @push('script')
@@ -101,34 +100,6 @@
                         searchable: false,
                         sortable: false
                     }
-                ]
-            });
-
-            table2 = $('#table-detail').DataTable({
-                processing: true,
-                bsort: false,
-                dom: 'Brt',
-                columns: [{
-                        data: 'DT_RowIndex',
-                        searchable: false,
-                        sortable: false
-                    },
-                    {
-                        data: 'name'
-                    },
-                    {
-                        data: 'unit_amount',
-                        sortable: false
-                    },
-                    {
-                        data: 'quantity',
-                        sortable: false
-                    },
-                    {
-                        data: 'total_amount',
-                        searchable: false,
-                        sortable: false
-                    },
                 ]
             });
         });
