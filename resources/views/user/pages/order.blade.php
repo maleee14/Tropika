@@ -40,14 +40,15 @@
                                         <p class="mb-0 mt-4">{{ $loop->iteration }}</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0 mt-4">{{ $item->firstname }} {{ $item->lastname }}</p>
+                                        <p class="mb-0 mt-4">{{ $item->address->firstname }} {{ $item->address->lastname }}
+                                        </p>
                                     </td>
                                     <td>
-                                        <p class="mb-0 mt-4">{{ $item->address }}, {{ $item->city }},
-                                            {{ $item->zip_code }}</p>
+                                        <p class="mb-0 mt-4">{{ $item->address->address }}, {{ $item->address->city }},
+                                            {{ $item->address->zip_code }}</p>
                                     </td>
                                     <td>
-                                        <p class="mb-0 mt-4">{{ $item->phone }}</p>
+                                        <p class="mb-0 mt-4">{{ $item->address->phone }}</p>
                                     </td>
                                     <td>
                                         <p class="mb-0 mt-4">Rp {{ number_format($item->grand_total, 0, ',', '.') }}</p>

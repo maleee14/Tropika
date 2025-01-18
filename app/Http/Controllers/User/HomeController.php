@@ -11,6 +11,19 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private function getCategories($query, $categorySlug)
+    {
+        // Filter berdasarkan kategori (slug)
+        if ($categorySlug && $categorySlug != '') {
+            $category = Category::where('slug', $categorySlug)->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+            }
+        }
+
+        return $query;
+    }
+
     public function index()
     {
         $category = Category::all();
@@ -18,10 +31,18 @@ class HomeController extends Controller
         return view('user.home', compact('category', 'product'));
     }
 
-    public function detail($slug)
+    public function detail($slug, Request $request)
     {
         $product = Product::where('slug', $slug)->first();
         $comment = Comment::with('user')->where('product_id', $product->id)->get();
+
+        $query = Product::with('category');
+
+        // panggil fungsi getCategories
+        $filter = $this->getCategories($query, $request->category);
+
+        // Dapatkan kategori dengan jumlah produk
+        $categories = Category::withCount('products')->get();
 
         if ($product !== null && $product->category !== null) {
             $relatedProduct = Product::with('category')
@@ -29,7 +50,7 @@ class HomeController extends Controller
                 ->where('id', '!=', $product->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
-            return view('user.product.detail', compact('product', 'relatedProduct', 'comment'));
+            return view('user.product.detail', compact('product', 'relatedProduct', 'comment', 'categories'));
         } else {
             return view('user.pages.404');
         }
@@ -52,16 +73,9 @@ class HomeController extends Controller
 
     public function shop(Request $request)
     {
-        // Mulai query untuk produk
         $query = Product::with('category');
-
-        // Filter berdasarkan kategori (slug)
-        if ($request->has('category') && $request->category != '') {
-            $category = Category::where('slug', $request->category)->first();
-            if ($category) {
-                $query->where('category_id', $category->id);
-            }
-        }
+        // panggil fungsi getCategories
+        $filter = $this->getCategories($query, $request->category);
 
         // Filter berdasarkan pencarian (nama produk)
         if ($request->has('search') && $request->search != '') {
@@ -95,7 +109,7 @@ class HomeController extends Controller
 
     public function order()
     {
-        $order = Order::with('user')->where('user_id', auth()->user()->id)->get();
+        $order = Order::with('address')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return view('user.pages.order', compact('order'));
     }
 }

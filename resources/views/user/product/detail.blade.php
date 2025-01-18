@@ -210,7 +210,7 @@
                 <div class="col-lg-4 col-xl-3">
                     <div class="row g-4 fruite">
                         <div class="col-lg-12">
-                            <form action="{{ route('product.search') }}" method="GET">
+                            <form action="{{ route('shop') }}" method="GET">
                                 <div class="input-group w-100 mx-auto d-flex mb-4">
                                     <input type="search" class="form-control p-3" placeholder="keywords"
                                         aria-describedby="search-icon-1" name="search" autocomplete="off">
@@ -221,36 +221,17 @@
                             <div class="mb-4">
                                 <h4>Categories</h4>
                                 <ul class="list-unstyled fruite-categorie">
-                                    <li>
-                                        <div class="d-flex justify-content-between fruite-name">
-                                            <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
-                                            <span>(3)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="d-flex justify-content-between fruite-name">
-                                            <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
-                                            <span>(5)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="d-flex justify-content-between fruite-name">
-                                            <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
-                                            <span>(2)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="d-flex justify-content-between fruite-name">
-                                            <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
-                                            <span>(8)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="d-flex justify-content-between fruite-name">
-                                            <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
-                                            <span>(5)</span>
-                                        </div>
-                                    </li>
+                                    @foreach ($categories as $item)
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="{{ route('shop', ['category' => $item->slug]) }}"
+                                                    class="{{ request('category') == $item->slug ? 'active' : '' }}">
+                                                    {{ $item->name }}
+                                                </a>
+                                                <span>({{ $item->products->count() }})</span>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
