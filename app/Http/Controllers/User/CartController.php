@@ -9,6 +9,30 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private function updateCartItemQuantity($rowId, $quantityChange)
+    {
+        $cart = Cart::get($rowId);
+
+        $newQuantity = $cart->qty + $quantityChange;
+
+        if ($newQuantity < 1) {
+            $newQuantity = 1;
+            return redirect()->back()->with('alert', 'Minimal Harus Ada 1 Produk');
+        }
+
+        $newTotalAmount = $newQuantity * $cart->price;
+
+        $options = $cart->options->toArray();
+        $options['total_amount'] = $newTotalAmount;
+
+        Cart::update($rowId, [
+            'qty' => $newQuantity,
+            'options' => $options
+        ]);
+
+        return redirect()->back();
+    }
+
     public function index()
     {
         $cartItem = Cart::content();
@@ -56,14 +80,14 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function increaseItem($id)
+    public function increaseItem($rowId)
     {
-        //
+        return $this->updateCartItemQuantity($rowId, 1);
     }
 
-    public function decreaseItem($id)
+    public function decreaseItem($rowId)
     {
-        //
+        return $this->updateCartItemQuantity($rowId, -1);
     }
 
     public function destroy($id)

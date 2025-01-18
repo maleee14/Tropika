@@ -33,6 +33,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if (session('alert'))
+                            <div class="alert alert-success alert-block">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                                <strong>{{ session('alert') }}</strong>
+                            </div>
+                        @endif
                         @if ($cartItem->count() > 0)
                             @foreach ($cartItem as $item)
                                 <tr>
@@ -50,19 +57,30 @@
                                         <p class="mb-0 mt-4">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                                     </td>
                                     <td>
-                                        <div class="input-group quantity mt-4" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                        <div class="d-flex justify-content-between align-items-center mt-4"
+                                            style="width: 100px;">
+                                            <!-- Decrease Quantity -->
+                                            <form action="{{ route('cart.decrease', $item->rowId) }}" method="post"
+                                                class="d-inline-block">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm rounded-circle bg-light border">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0"
-                                                value="{{ $item->qty }}" min="1" max="100">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            </form>
+
+                                            <!-- Current Quantity -->
+                                            <input type="text"
+                                                class="form-control form-control-sm text-center border-0 mx-1"
+                                                value="{{ $item->qty }}" readonly style="width: 40px;">
+
+                                            <!-- Increase Quantity -->
+                                            <form action="{{ route('cart.increase', $item->rowId) }}" method="post"
+                                                class="d-inline-block">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm rounded-circle bg-light border">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
-                                            </div>
+                                            </form>
                                         </div>
                                     </td>
                                     <td>
