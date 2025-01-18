@@ -50,18 +50,7 @@ class CartController extends Controller
         $cartItem = Cart::content()->where('id', $product->id)->first();
 
         if ($cartItem) {
-            // Update the existing cart item
-            $newQty = $cartItem->qty + $quantity;
-            $newTotalAmount = $newQty * $product->price;
-
-            // Preserve existing options and update total_amount
-            $options = $cartItem->options->toArray();
-            $options['total_amount'] = $newTotalAmount;
-
-            Cart::update($cartItem->rowId, [
-                'qty' => $newQty,
-                'options' => $options
-            ]);
+            return $this->updateCartItemQuantity($cartItem->rowId, $quantity);
         } else {
             // Add new item to the cart
             Cart::add([
