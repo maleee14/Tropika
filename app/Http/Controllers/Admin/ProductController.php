@@ -38,7 +38,7 @@ class ProductController extends Controller
             ->addColumn('action', function ($product) {
                 return '
                 <div style="display: flex; justify-content: center;">
-                    <button type="button" onclick="editForm(`' . route('product.update', $product->id) . '`)" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Edit</button>
+                    <a type="button" href="' . route('product.edit', $product->id) . '" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Edit</a>
                     <form method="POST" action="' . route('product.destroy', $product->id) . '" style="display: inline;">
                         ' . csrf_field() . method_field("DELETE") . '
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure you want to delete this item?\')">
@@ -57,7 +57,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::all()->pluck('name', 'id');
+        return view('admin.product.create', compact('category'));
     }
 
     /**
@@ -72,6 +73,8 @@ class ProductController extends Controller
             'stock' => 'required',
             'image' => 'required|image',
             'description' => 'required',
+        ], [
+            'category_id.required' => 'The category field is required.'
         ]);
 
         $file = $request->file('image');
@@ -88,7 +91,7 @@ class ProductController extends Controller
             'description' => $request->description,
         ]);
 
-        return response()->json('Data Berhasil Di Simpan', 200);
+        return redirect()->route('product.index');
     }
 
     /**
@@ -105,7 +108,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        $category = Category::all()->pluck('name', 'id');
+        return view('admin.product.edit', compact('product', 'category'));
     }
 
     /**
@@ -145,7 +150,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->update();
 
-        return response()->json('Data Berhasil Di Simpan', 200);
+        return redirect()->route('product.index');
     }
 
     /**

@@ -17,7 +17,7 @@ class OrderController extends Controller
 
     public function data()
     {
-        $order = Order::with('user')->get();
+        $order = Order::with('user')->orderBy('created_at', 'desc')->get();
         return datatables()
             ->of($order)
             ->addColumn('name', function ($order) {

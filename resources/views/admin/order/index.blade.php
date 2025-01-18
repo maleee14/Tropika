@@ -54,7 +54,6 @@
 @push('script')
     <script>
         let table;
-        let table2;
 
         $(function() {
             table = $('#table-order').DataTable({
@@ -103,11 +102,5 @@
                 ]
             });
         });
-
-        function showDetail(url) {
-            $('#modal-detail').modal('show');
-            table2.ajax.url(url);
-            table2.ajax.reload();
-        }
     </script>
 @endpush
