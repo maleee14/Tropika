@@ -35,18 +35,6 @@ class HomeController extends Controller
         }
     }
 
-    public function search(Request $request)
-    {
-        $search = $request->search;
-        $product = Product::where('name', 'like', '%' . $search . '%')->paginate(9);
-
-        if ($product->isNotEmpty()) {
-            return view('user.pages.shop', compact('product', 'search'));
-        } else {
-            return view('user.pages.404');
-        }
-    }
-
     public function createComment(Request $request)
     {
         $request->validate([
@@ -62,12 +50,38 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function shop()
+    public function shop(Request $request)
     {
+        // Mulai query untuk produk
+        $query = Product::with('category');
 
-        $product = Product::with('category')->paginate(9);
-        return view('user.pages.shop', compact('product'));
+        // Filter berdasarkan kategori (slug)
+        if ($request->has('category') && $request->category != '') {
+            $category = Category::where('slug', $request->category)->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+            }
+        }
+
+        // Filter berdasarkan pencarian (nama produk)
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Dapatkan hasil dengan paginasi
+        $products = $query->paginate(9);
+
+        // Dapatkan kategori dengan jumlah produk
+        $categories = Category::withCount('products')->get();
+
+        // Kirim data ke view
+        if ($products->isNotEmpty()) {
+            return view('user.pages.shop', compact('products', 'categories'));
+        } else {
+            return view('user.pages.404');
+        }
     }
+
 
     public function testimoni()
     {

@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('product.search') }}" method="get">
+            <form action="{{ route('shop') }}" method="get">
                 <div class="modal-body d-flex align-items-center">
                     <div class="input-group w-75 mx-auto d-flex">
                         <input type="search" class="form-control p-3" placeholder="keywords"
