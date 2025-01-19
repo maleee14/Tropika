@@ -4293,11 +4293,18 @@ fieldset:disabled .btn {
 .breadcrumb-item.active {
     color: #6c757d;
 }
+
 .pagination {
-    display: flex;
-    padding-left: 0;
-    list-style: none;
+    display: flex; /* Pastikan display tetap flex */
+    padding-left: 0; /* Hilangkan padding bawaan */
+    list-style: none; /* Hilangkan bullet points */
+    gap: 0.5rem; /* Tambahkan jarak antar item (opsional) */
 }
+
+.pagination li {
+    display: inline-block; /* Pastikan setiap <li> berjajar horizontal */
+}
+
 .page-link {
     position: relative;
     display: block;
