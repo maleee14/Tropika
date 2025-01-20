@@ -59,8 +59,24 @@ class CheckoutController extends Controller
             $produk->update();
         }
 
+        // if ($request->payment_method == "paypal") {
+        //     Cart::destroy();
+        //     return response()->json('pembayaran paypal berhasil');
+        // }
+
         Cart::destroy();
 
-        return response()->json('berhasil');
+        return redirect()->route('checkout.success');
+    }
+
+    public function success()
+    {
+        $cartItem  = Cart::content();
+
+        if ($cartItem->isEmpty()) {
+            return view('user.pages.404');
+        } else {
+            return view('user.cart.success');
+        }
     }
 }
