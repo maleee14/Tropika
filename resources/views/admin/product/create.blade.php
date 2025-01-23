@@ -61,7 +61,9 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea class="form-control" name="description" id="description" cols="30" rows="3"></textarea>
+                            <input type="hidden" name="description" id="description">
+                            <trix-editor input="description"></trix-editor>
+                            {{-- <textarea class="form-control" name="description" id="description" cols="30" rows="3"></textarea> --}}
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>

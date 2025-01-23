@@ -41,7 +41,7 @@
                                 <i class="fa fa-star text-secondary"></i>
                                 <i class="fa fa-star"></i>
                             </div>
-                            <p class="mb-4">{{ $product->description }}</p>
+                            <p class="mb-4">{!! $product->description !!}</p>
                             <form action="{{ route('cart.add') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">

@@ -208,7 +208,7 @@
                                                         href="{{ route('product.detail', $item->slug) }}">{{ $item->name }}</a>
                                                 </h4>
                                                 <p>
-                                                    {{ implode(' ', array_slice(explode(' ', $item->description), 0, 10)) }}...
+                                                    {!! implode(' ', array_slice(explode(' ', strip_tags($item->description)), 0, 10)) !!}...
                                                 </p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">Rp

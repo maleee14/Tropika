@@ -45,6 +45,16 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+    {{-- Trix Editor --}}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+
+    <style>
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
+    </style>
+
     @stack('style')
 </head>
 
@@ -121,6 +131,13 @@
     <script src="{{ asset('assets/admin/dist/js/pages/dashboard.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('assets/admin/dist/js/demo.js') }}"></script>
+    {{-- Trix Editor --}}
+    <script>
+        document.addEventListener('trix-file-accept', function(event) {
+            event.preventDefault(); // Mencegah upload file
+            alert('Upload file dinonaktifkan.');
+        });
+    </script>
 
     @stack('script')
 </body>

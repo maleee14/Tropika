@@ -67,7 +67,8 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea class="form-control" name="description" id="description" cols="30" rows="3">{{ $product->description }}</textarea>
+                            <input type="hidden" name="description" id="description" value="{{ $product->description }}">
+                            <trix-editor input="description"></trix-editor>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
