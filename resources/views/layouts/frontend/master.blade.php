@@ -28,6 +28,12 @@
     <link href="{{ asset('assets/frontend/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="{{ asset('assets/frontend/css/style.css') }}" rel="stylesheet">
+
+    <style>
+        .custom-toast {
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 
 <body>

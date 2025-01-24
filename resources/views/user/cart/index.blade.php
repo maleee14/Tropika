@@ -92,8 +92,9 @@
                                         <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                                <i class="fa fa-times text-danger" id="button-delete"></i>
+                                            <button class="btn btn-md rounded-circle bg-light border mt-4"
+                                                id="button-delete">
+                                                <i class="fa fa-times text-danger"></i>
                                             </button>
                                         </form>
                                     </td>
