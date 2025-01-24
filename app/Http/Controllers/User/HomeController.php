@@ -68,7 +68,7 @@ class HomeController extends Controller
             'content' => $request->content
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Komentar berhasil ditambahkan');
     }
 
     public function shop(Request $request)

@@ -93,7 +93,7 @@
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                                <i class="fa fa-times text-danger"></i>
+                                                <i class="fa fa-times text-danger" id="button-delete"></i>
                                             </button>
                                         </form>
                                     </td>

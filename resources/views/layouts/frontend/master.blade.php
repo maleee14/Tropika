@@ -69,6 +69,58 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+
+    {{-- Sweet Alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            width: '25em',
+            timer: 2000,
+            timerProgressBar: true,
+            customClass: {
+                popup: 'custom-toast'
+            }
+        })
+
+        $(function() {
+            $(document).on('click', '#button-delete', function(e) {
+                e.preventDefault();
+                var form = $(this).closest("form");
+                Swal.fire({
+                    title: "Yakin Dihapus ?",
+                    text: "Data Anda Akan Hilang !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                    customClass: {
+                        popup: 'custom-toast'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            })
+        })
+
+        @if (session()->has('success'))
+            Toast.fire({
+                icon: 'success',
+                text: '{{ session('success') }}',
+            });
+        @elseif (session()->has('error'))
+            Toast.fire({
+                icon: 'error',
+                text: '{{ session('error') }}',
+            });
+        @endif
+    </script>
 </body>
 
 </html>

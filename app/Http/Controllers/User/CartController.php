@@ -66,23 +66,25 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang');
     }
 
     public function increaseItem($rowId)
     {
+        session()->flash('success', 'Produk berhasil ditambahkan');
         return $this->updateCartItemQuantity($rowId, 1);
     }
 
     public function decreaseItem($rowId)
     {
+        session()->flash('success', 'Produk berhasil dikurangi');
         return $this->updateCartItemQuantity($rowId, -1);
     }
 
     public function destroy($id)
     {
         Cart::remove($id);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang');
     }
 
     public function checkout()
