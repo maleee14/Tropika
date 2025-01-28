@@ -111,7 +111,7 @@ class CategoryController extends Controller
             $file = $request->file('image');
             $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
 
-            Storage::disk('category')->put('public/category/' . $path, file_get_contents($file));
+            Storage::disk('category')->put($path, file_get_contents($file));
 
             if ($category->image) {
                 Storage::disk('category')->delete($category->image);
