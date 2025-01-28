@@ -138,7 +138,7 @@ class ProductController extends Controller
             $file = $request->file('image');
             $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
 
-            Storage::disk('product')->put($path, file_get_contents($file));
+            Storage::disk('product')->put('public/product/' . $path, file_get_contents($file));
 
             if ($product->image) {
                 Storage::disk('product')->delete($product->image);
