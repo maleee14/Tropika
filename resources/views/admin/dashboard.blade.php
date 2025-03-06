@@ -13,7 +13,7 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
         <div class="col-lg-3 col-xs-6">
-            <!-- small box 1 -->
+            <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
                     <h3>150</h3>
@@ -28,7 +28,7 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box 2 -->
+            <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
                     <h3>53<sup style="font-size: 20px">%</sup></h3>
@@ -43,7 +43,7 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box 3 -->
+            <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
                     <h3>44</h3>
@@ -58,7 +58,7 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-            <!-- small box 4 -->
+            <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>65</h3>
